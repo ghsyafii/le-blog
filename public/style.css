@@ -1,5 +1,5 @@
 body {
-    font-family: 'Roboto', sans-serif;;
+    font-family: 'Roboto', sans-serif;
     max-width: 1200px;
     margin: 20px auto;
     padding: 0 20px;
@@ -93,4 +93,22 @@ textarea {
     border: 0;
     font-size: 1.2em;
     cursor: pointer;
+}
+
+.details {
+    position: relative;
+}
+
+.delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 20%;
+    padding: 8px;
+}
+.delete:hover {
+    cursor: pointer;
+    box-shadow: 1px 2px 3px grey;
+    background: #F91110;
+    color: white;
 }
