@@ -1,8 +1,9 @@
 body {
-    font-family: Arial;
+    font-family: 'Roboto', sans-serif;;
     max-width: 1200px;
     margin: 20px auto;
     padding: 0 20px;
+    background-color: #FDFBF4 !important;
 }
 
 p, h1, h2, h3, a, ul {
@@ -53,6 +54,19 @@ h3 {
     margin-left: 20px;
 }
 
+/*index styles*/
+
+.blogs a{
+    display: block;
+    margin: 40px 0;
+    padding-left: 30px;
+    border-left: 6px solid #F91110;
+}
+
+.blogs a:hover h3{
+    color: grey;
+}
+
 .create-blog form {
     max-width: 400px;
     margin: 0 auto;
@@ -73,7 +87,7 @@ textarea {
 }
 .create-blog button {
     margin-top: 20px;
-    background: blue;
+    background: #FFC008;
     color: white;
     padding: 6px;
     border: 0;

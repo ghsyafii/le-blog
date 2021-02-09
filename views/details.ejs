@@ -8,11 +8,11 @@
     <title>My Blog | <%= title%></title>
     <style>
         body {
-            background-color: #FDFBF4 !important;
             font-family: Arial;
             max-width: 1200px;
             margin: 20px auto;
             padding: 0 20px;
+            background-color: #FDFBF4 !important;
         }
 
         p, h1, h2, h3, a, ul {
@@ -83,33 +83,34 @@
         }
         .create-blog button {
             margin-top: 20px;
-            background: #FFC008;
-            color: black;
+            background: blue;
+            color: white;
             padding: 6px;
             border: 0;
-            font-size: 1em;
+            font-size: 1.2em;
             cursor: pointer;
-            border-radius: 5px
+        }
+        .blogs a{
+            display: block;
+            margin: 40px 0;
+            padding-left: 30px;
+            border-left: 6px solid blue;
+        }
+
+        .blogs a:hover h3{
+            color: lightblue;
         }
     </style>
 </head>
 <body>
 <%- include('./partials/nav.ejs') %>
 
-<div class="create-blog content">
-    <form action="/blogs" method="POST">
-
-        <label for="title">Blog title:</label>
-        <input type="text" id="title" name="title" required>
-        
-        <label for="snippet">Blog snippet:</label>
-        <input type="text" id="snippet" name="snippet" required>
-
-        <label for="body">Blog body:</label>
-        <textarea id="body" name="body" required></textarea>
-
-        <button>Submit</button>
-    </form>
+<div class="details content">
+    <h2><%= blog.title %></h2>
+    <div class="content">
+        <p><%= blog.body %></p>
+    </div>
+<!--    <a class="delete" data-doc="<%=blog._id%>">delete</a>-->
 </div>
 <%- include('./partials/footer.ejs')%>
 

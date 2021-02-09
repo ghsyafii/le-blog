@@ -24,7 +24,8 @@ mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true })
 app.set('view engine', 'ejs');
 
 //listen for requests (commented out and added to promise above, so it's connected only if the database is connected.
-// app.listen(3000);
+
+app.listen(4000);
 
 //middleware and static files
 
@@ -44,42 +45,114 @@ app.use(express.static('public'));
 
 //morgan middleware
 
-app.use(morgan('dev'));
+app.use(morgan('dev'))
+
+//middleware to convert posts to right format
+
+app.use(express.urlencoded({ extended: true }));
 
 //mongoose and mongo sandbox routes
 
 //use model to create new instance of a blog document
 
-app.get('/add-blog', (res, req) => {
-    const blog = new Blog({
-        title: 'new blog',
-        snippet: 'about my new blog',
-        body: 'more about my new blog'
-    });
-    blog.save();
-})
+// app.get('/add-blog', (req, res) => {
+//     const blog = new Blog({
+//         title: 'new blog 3',
+//         snippet: 'about my new blog',
+//         body: 'more about my new blog'
+//     });
+//     blog.save()
+//         .then((result) => {
+//             res.send(result)
+//         })
+//         .catch((error) => console.log(error))
+// });
+
+//get all blogs
+
+// app.get('/all-blogs', (req, res) => {
+//     Blog.find()
+//         .then((result) => {
+//             res.send(result);
+//         })
+//         .catch((err) => console.log(err))
+// });
+//
+// //find single blog
+//
+// app.get('/single-blog', (req, res) => {
+//     Blog.findById('60214b182151a28663e92cf8')
+//         .then((result) => {
+//             res.send(result);
+//         })
+//         .catch((err) => console.log(err));
+// });
+
+//routes
 
 app.get('/', (req, res) => {
-    const blogs = [
-        {title: 'The Land Before Time', snippet: 'This is the deal, Holyfield.'},
-        {title: 'The Land Before Space', snippet: 'This is the deal, Tyson.'},
-        {title: 'The Land Before Nothing', snippet: 'This is the deal, Douglas.'},
-        {title: 'The Land Before Matter', snippet: 'This is the deal, Ziggurat.'},
-        {title: 'The Land Before Peanut Butter', snippet: 'This is the deal, Tan.'}
-    ];
-    res.render('index', { title: 'Home', blogs });
+    // this could be a totally unique homepage but now it just redirects
+   res.redirect('/blogs')
 });
 
 app.get('/about', (req, res) => {
     res.render('about', { title: 'About' });
 });
 
+//blog routes
+app.get('/blogs', (req,res) => {
+    //.find() finds all stuff in collection
+    //.sort() sorts it by some standard, same -1 +1 rule as JS
+    Blog.find().sort( { createdAt: -1 })
+        .then((result) => {
+            //render to this route ie /blogs the index.ejs file and pass the title, and for the blogs, pass the result - refer to index html to see the relationships
+            res.render('index', { title: 'All Blogs', blogs: result});
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+});
+
+//POST request: save new blog entry to database
+
+app.post('/blogs', (req, res) => {
+    const blog = new Blog(req.body);
+    blog.save()
+        .then(result => {
+            //redirect to homepage that shows all blogs
+            res.redirect('/blogs');
+        })
+        .catch(err => console.log(err))
+});
+
 app.get('/blogs/create', (req, res) => {
     res.render('create', { title: 'Create' });
-})
+});
+
+//GET: Post by ID (include : in front of route parameter
+
+app.get('/blogs/:id', (req,res) => {
+    //get id from req object (the last bit ".id in this case" corresponds to whatever comes after :)
+    const id = req.params.id;
+    Blog.findById(id)
+        .then(result => {
+            res.render('details', { blog : result, title: 'Blog Details' });
+        })
+        .catch(err => console.log(err))
+});
 
 //middleware 404 - default if the others do not fire
 
 app.use((req, res) => {
     res.status(404).render('404', { title: '404' });
 })
+
+//dummy data for homepage or blogs to load:
+// const blogs = [
+//         {title: 'The Land Before Time', snippet: 'This is the deal, Holyfield.'},
+//         {title: 'The Land Before Space', snippet: 'This is the deal, Tyson.'},
+//         {title: 'The Land Before Nothing', snippet: 'This is the deal, Douglas.'},
+//         {title: 'The Land Before Matter', snippet: 'This is the deal, Ziggurat.'},
+//         {title: 'The Land Before Peanut Butter', snippet: 'This is the deal, Tan.'}
+//     ];
+//     res.render('index', { title: 'Home', blogs });
