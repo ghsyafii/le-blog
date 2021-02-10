@@ -1,18 +1,21 @@
 <!doctype html>
 <html lang="en">
-<%- include('./partials/head.ejs') %>
+<%- include('../partials/head.ejs') %>
 
 <body>
-<%- include('./partials/nav.ejs') %>
+<%- include('../partials/nav.ejs') %>
 
 <div class="details content">
     <h2><%= blog.title %></h2>
     <div class="content">
         <p style="white-space: pre-line;"><%= blog.body %></p>
     </div>
-    <a class="delete" data-doc="<%=blog._id%>">delete</a>
+    <a class="delete" data-doc="<%=blog._id%>">
+<!--        <img src="/delete.svg" alt="delete icon">-->
+        Delete
+    </a>
 </div>
-<%- include('./partials/footer.ejs')%>
+<%- include('../partials/footer.ejs')%>
 <script>
     //get delete button
     const trashcan = document.querySelector('a.delete');
