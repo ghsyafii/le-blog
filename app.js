@@ -25,7 +25,7 @@ app.set('view engine', 'ejs');
 
 //listen for requests (commented out and added to promise above, so it's connected only if the database is connected.
 
-app.listen(3000);
+app.listen(4000);
 
 //middleware and static files
 
