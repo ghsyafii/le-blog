@@ -1,7 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const Blog = require('./models/blog');
+const blogRoutes = require('./routes/blogRoutes');
 
 //express app
 const app = express();
@@ -99,57 +99,8 @@ app.get('/about', (req, res) => {
     res.render('about', { title: 'About' });
 });
 
-//blog routes
-app.get('/blogs', (req,res) => {
-    //.find() finds all stuff in collection
-    //.sort() sorts it by some standard, same -1 +1 rule as JS
-    Blog.find().sort( { createdAt: -1 })
-        .then((result) => {
-            //render to this route ie /blogs the index.ejs file and pass the title, and for the blogs, pass the result - refer to index html to see the relationships
-            res.render('index', { title: 'All Blogs', blogs: result});
-        })
-        .catch((error) => {
-            console.log(error)
-        })
-});
-
-//POST request: save new blog entry to database
-
-app.post('/blogs', (req, res) => {
-    const blog = new Blog(req.body);
-    blog.save()
-        .then(result => {
-            //redirect to homepage that shows all blogs
-            res.redirect('/blogs');
-        })
-        .catch(err => console.log(err))
-});
-
-app.get('/blogs/create', (req, res) => {
-    res.render('create', { title: 'Create' });
-});
-
-//GET: Post by ID (include : in front of route parameter
-
-app.get('/blogs/:id', (req,res) => {
-    //get id from req object (the last bit ".id in this case" corresponds to whatever comes after :)
-    const id = req.params.id;
-    Blog.findById(id)
-        .then(result => {
-            res.render('details', { blog : result, title: 'Blog Details' });
-        })
-        .catch(err => console.log(err))
-});
-
-//delete
-app.delete('/blogs/:id', (req,res) => {
-    const id = req.params.id;
-    Blog.findByIdAndDelete(id)
-        .then(result => {
-            res.json({ redirect: '/blogs' })
-        })
-        .catch(err => console.log(err))
-})
+//blog routes - link to blogRoutes.js, first argument isn't compulsory but it says it only applies to routes with /blogs. make sure to remove /blogs for the linked routes
+app.use('/blogs', blogRoutes);
 
 //middleware 404 - default if the others do not fire
 
