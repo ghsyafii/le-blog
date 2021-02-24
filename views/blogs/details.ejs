@@ -10,19 +10,19 @@
     <div class="content">
         <p style="white-space: pre-line;"><%= blog.body %></p>
     </div>
-    <a class="delete" data-doc="<%=blog._id%>">
+<!--    <a class="delete" data-doc="<%=blog._id%>">-->
 <!--        <img src="/delete.svg" alt="delete icon">-->
-        Delete
-    </a>
+<!--        Delete-->
+<!--    </a>-->
 </div>
 <%- include('../partials/footer.ejs')%>
 <script>
     //get delete button
-    const trashcan = document.querySelector('a.delete');
+    const deletePost = document.querySelector('a.delete');
     //add event listener to button
-    trashcan.addEventListener('click', e => {
+    deletePost.addEventListener('click', e => {
         //dataset refers to data attribute ,the doc refers to whatever comes after that
-        const endpoint = `/blogs/${trashcan.dataset.doc}`;
+        const endpoint = `/blogs/${deletePost.dataset.doc}`;
         fetch(endpoint, {
             method: 'DELETE'
         })
