@@ -1,17 +1,21 @@
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto Slab', serif;
     max-width: 1200px;
     margin: 20px auto;
     padding: 0 20px;
     background-color: #FDFBF4 !important;
 }
 
-p, h1, h2, h3, a, ul {
+h1, h2, h3, a {
     margin: 0;
     padding: 0;
     text-decoration: none;
     color: #222;
 }
+
+p {
+    font-family: 'Roboto', sans-serif;}
+
 nav {
     display: flex;
     justify-content: space-between;
@@ -35,7 +39,7 @@ nav h1 {
     color: black;
 }
 nav p, nav a {
-    color: #777;
+    color: black;
     font-weight: 300;
 }
 footer {
@@ -60,7 +64,7 @@ h3 {
     display: block;
     margin: 40px 0;
     padding-left: 30px;
-    border-left: 6px solid #F91110;
+    border-left: 6px solid #002fa7;
 }
 
 .blogs a:hover h3{
@@ -87,12 +91,13 @@ textarea {
 }
 .create-blog button {
     margin-top: 20px;
-    background: #FFC008;
+    background: black;
     color: white;
-    padding: 6px;
+    padding: 10px;
     border: 0;
-    font-size: 1.2em;
+    font-size: 1em;
     cursor: pointer;
+    border-radius: 5px;
 }
 
 .details {
